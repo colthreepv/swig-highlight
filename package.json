@@ -19,7 +19,7 @@
   "author": "Valerio Coltre <valerio.coltre@gmail.com> (http://mrgamer.github.io/)",
   "license": "MIT",
   "scripts": {
-    "test": "node_modules/.bin/mocha -R nyan"
+    "test": "node_modules/.bin/mocha -R spec"
   },
   "peerDependencies": {
     "grunt": "~0.4.4"
