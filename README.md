@@ -1,4 +1,4 @@
-swig-highlight
+swig-highlight [![Build Status](https://travis-ci.org/mrgamer/swig-highlight.svg?branch=master)](https://travis-ci.org/mrgamer/swig-highlight) [![Dependencies status](https://david-dm.org/mrgamer/swig-highlight.png)](https://david-dm.org/)
 ==============
 
 extension for the swig templating engine, adding highlight.js code blocks to be rendered!
