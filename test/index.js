@@ -5,7 +5,7 @@ var assert = require('assert'),
 
 require('../index').apply(swig);
 
-describe('swig-highlight', function () {
+describe('base functionality', function () {
   var template, compiledTemplate;
   before(function () {
     template = swig.compileFile(path.resolve(process.cwd(), 'test/fixtures/html.swig'));
@@ -21,9 +21,10 @@ describe('swig-highlight', function () {
     var regex = /class="hljs bash/;
     assert.ok(regex.test(compiledTemplate));
   });
+
 });
 
-describe('guess language', function () {
+describe('details', function () {
   var template, compiledTemplate;
   before(function () {
     template = swig.compileFile(path.resolve(process.cwd(), 'test/fixtures/auto.swig'));
@@ -34,4 +35,10 @@ describe('guess language', function () {
     var regex = /class="hljs python/;
     assert.ok(regex.test(compiledTemplate));
   });
+
+  it('should have no newlines that breaks HTML', function () {
+    var regex = /hljs python.\>\n/;
+    assert.ok(!regex.test(compiledTemplate));
+  });
+
 });

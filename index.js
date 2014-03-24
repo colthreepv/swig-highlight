@@ -23,9 +23,9 @@ exports.compile = function (compiler, args, content, parents, options, blockName
 
   if (args.length > 0) {
     language = args[0];
-    code = hljs.highlight(language, content[0]).value;
+    code = hljs.highlight(language, content[0].trim()).value;
   } else {
-    hljsOutput = hljs.highlightAuto(content[0]);
+    hljsOutput = hljs.highlightAuto(content[0].trim());
     code = hljsOutput.value;
     language = hljsOutput.language;
   }
