@@ -1,6 +1,6 @@
 {
   "name": "swig-highlight",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "extension for the swig templating engine, adding highlight.js code blocks to be rendered!",
   "repository": {
     "type": "git",

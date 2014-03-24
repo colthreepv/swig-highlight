@@ -30,7 +30,7 @@ exports.compile = function (compiler, args, content, parents, options, blockName
     language = hljsOutput.language;
   }
 
-  highlighted += '<pre><code class="hljs ' + language + '">' + code + '</code></pre>';
+  highlighted += '<code class="hljs ' + language + '">' + code + '</code>';
   highlighted = highlighted
     .replace(/\\/g, '\\\\')
     .replace(/\n/g, '\\n')
