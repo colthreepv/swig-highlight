@@ -27,7 +27,7 @@ exports.compile = function (compiler, args, content, parents, options, blockName
   } else {
     hljsOutput = hljs.highlightAuto(content[0].trim());
     code = hljsOutput.value;
-    language = hljsOutput.language;
+    language = hljsOutput.language || '';
   }
 
   highlighted += '<code class="hljs ' + language + '">' + code + '</code>';
