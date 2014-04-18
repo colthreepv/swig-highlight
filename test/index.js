@@ -42,3 +42,17 @@ describe('details', function () {
   });
 
 });
+
+describe('extensive functionality', function () {
+  var template, compiledTemplate;
+  before(function () {
+    template = swig.compileFile(path.resolve(process.cwd(), 'test/fixtures/highlight-include.swig'));
+    compiledTemplate = template();
+  });
+
+  it('should have included and highlighted the file', function () {
+    var regex = /testFunction/;
+    assert.ok(regex.test(compiledTemplate));
+  });
+
+});

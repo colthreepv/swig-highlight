@@ -15,41 +15,42 @@ exports.parse = function (str, line, parser, types, options) {
   return true;
 };
 
-exports.compile = function (compiler, args, content, parents, options, blockName) {
-  var highlighted = '',
-      code = '',
-      language,
-      hljsOutput;
+exports.compile = function(compiler, args, content, parents, options, blockName) {
+  var highlightCompileStrings = [
+    {
+      compile: '  var __tpl = _ext.hljs.highlightAuto(_output);\n',
+      include: "  __o += '<code class=\"hljs ' + (__tpl.language || '') + '\">' + __tpl.value + '</code>';\n"
+    },
+    {
+      compile: "  var __tpl = _ext.hljs.highlight('" + args[0] + "', _output);\n",
+      include: "  __o += '<code class=\"hljs " + args[0] + "\">' + __tpl.value + '</code>';\n"
+    }
+  ];
 
+  var chosen = highlightCompileStrings[0]; // no language specified
   if (args.length > 0) {
-    language = args[0];
-    code = hljs.highlight(language, content[0].trim()).value;
-  } else {
-    hljsOutput = hljs.highlightAuto(content[0].trim());
-    code = hljsOutput.value;
-    language = hljsOutput.language || '';
+    chosen = highlightCompileStrings[1];
   }
 
-  highlighted += '<code class="hljs ' + language + '">' + code + '</code>';
-  highlighted = highlighted
-    .replace(/\\/g, '\\\\')
-    .replace(/\n/g, '\\n')
-    .replace(/\r/g, '\\r')
-    .replace(/"/g, '\\"');
-
-  var out = [
-    '(function(){',
-    '  _output += "' + highlighted + '";',
-    '  return _output;',
-    '})();'
-  ].join('\n');
-
-  return out;
+  return '(function () {\n' +
+    '  var __o = _output;\n' +
+    '  _output = "";\n' +
+    compiler(content, parents, options, blockName).replace(/"\\n/, '"').replace(/\\n"/, '"') + '\n' +
+    chosen.compile +
+    chosen.include +
+    '  _output = __o;\n' +
+    '})();\n';
 };
 
 exports.ends = true;
-exports.block = true;
+exports.block = false;
+
+exports.ext = {
+  name: 'hljs',
+  obj: hljs
+};
 
 exports.apply = function (swig) {
+  swig.setExtension(exports.ext.name, exports.ext.obj);
   swig.setTag('highlight', exports.parse, exports.compile, exports.ends, exports.block);
 };
